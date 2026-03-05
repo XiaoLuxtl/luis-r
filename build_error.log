@@ -1,0 +1,56 @@
+
+> luisr-chatbot@0.0.1 build D:\Projects\luisr-chatbot
+> astro build
+
+[2m09:38:48[22m [34m[content][39m Syncing content
+[2m09:38:48[22m [34m[content][39m Synced content
+[2m09:38:48[22m [34m[types][39m Generated [2m551ms[22m
+[2m09:38:48[22m [34m[build][39m output: [34m"static"[39m
+[2m09:38:48[22m [34m[build][39m mode: [34m"static"[39m
+[2m09:38:48[22m [34m[build][39m directory: [34mD:\Projects\luisr-chatbot\dist\[39m
+[2m09:38:48[22m [34m[build][39m Collecting build info...
+[2m09:38:48[22m [34m[build][39m [32mÔ£ô Completed in 575ms.[39m
+[2m09:38:48[22m [34m[build][39m Building static entrypoints...
+[2m09:38:49[22m [34m[vite][39m [32mÔ£ô built in 1.29s[39m
+[2m09:38:49[22m [34m[build][39m [32mÔ£ô Completed in 1.34s.[39m
+
+[42m[30m building client (vite) [39m[49m
+[2m09:38:49[22m [34m[vite][39m transforming...
+[2m09:38:49[22m [34m[vite][39m [32mÔ£ô[39m 14 modules transformed.
+[2m09:38:49[22m [34m[vite][39m rendering chunks...
+[2m09:38:49[22m [34m[vite][39m computing gzip size...
+[2m09:38:49[22m [34m[vite][39m [2mdist/[22m[36m_astro/page.D6sK1WDe.js                                               [39m[1m[2m 0.05 kB[22m[1m[22m[2m Ôöé gzip: 0.07 kB[22m
+[2m09:38:49[22m [34m[vite][39m [2mdist/[22m[36m_astro/index.srgjoacm.js                                              [39m[1m[2m 2.30 kB[22m[1m[22m[2m Ôöé gzip: 1.04 kB[22m
+[2m09:38:49[22m [34m[vite][39m [2mdist/[22m[36m_astro/ClientRouter.astro_astro_type_script_index_0_lang.CBOeYAl-.js  [39m[1m[2m13.11 kB[22m[1m[22m[2m Ôöé gzip: 4.54 kB[22m
+[2m09:38:49[22m [34m[vite][39m [32mÔ£ô built in 67ms[39m
+
+[42m[30m generating static routes [39m[49m
+[2m09:38:49[22m [32mÔûÂ[39m src/pages/index.astro
+[2m09:38:49[22m   [34mÔööÔöÇ[39m [2m/index.html[22m [2m(+9ms)[22m 
+[2m09:38:49[22m [32mÔûÂ[39m src/pages/case-study.astro
+[2m09:38:49[22m   [34mÔööÔöÇ[39m [2m/case-study/index.html[22m [2m(+14ms)[22m 
+[2m09:38:49[22m [32mÔ£ô Completed in 42ms.
+[39m
+[42m[30m generating optimized images [39m[49m
+node:internal/process/promises:394
+    triggerUncaughtException(err, true /* fromPromise */);
+    ^
+
+MissingSharp: Could not find Sharp. Please install Sharp (`sharp`) manually into your project or migrate to another image service.
+    at loadSharp (file:///D:/Projects/luisr-chatbot/dist/chunks/sharp_CX9E2Szh.mjs:16:11)
+    at async Object.transform (file:///D:/Projects/luisr-chatbot/dist/chunks/sharp_CX9E2Szh.mjs:37:25)
+    at async generateImageInternal (file:///D:/Projects/luisr-chatbot/node_modules/.pnpm/astro@5.18.0_jiti@2.6.1_lig_480db2268c527ae115089bd6f11ce1a7/node_modules/astro/dist/assets/build/generate.js:167:26)
+    at async generateImage (file:///D:/Projects/luisr-chatbot/node_modules/.pnpm/astro@5.18.0_jiti@2.6.1_lig_480db2268c527ae115089bd6f11ce1a7/node_modules/astro/dist/assets/build/generate.js:69:28)
+    at async generateImagesForPath (file:///D:/Projects/luisr-chatbot/node_modules/.pnpm/astro@5.18.0_jiti@2.6.1_lig_480db2268c527ae115089bd6f11ce1a7/node_modules/astro/dist/assets/build/generate.js:53:5)
+    at async file:///D:/Projects/luisr-chatbot/node_modules/.pnpm/p-queue@8.1.1/node_modules/p-queue/dist/index.js:230:36 {
+  loc: undefined,
+  title: 'Could not find Sharp.',
+  hint: "See Sharp's installation instructions for more information: https://sharp.pixelplumbing.com/install. If you are not relying on `astro:assets` to optimize, transform, or process any images, you can configure a passthrough image service instead of installing Sharp. See https://docs.astro.build/en/reference/errors/missing-sharp for more information.\n" +
+    '\n' +
+    'See https://docs.astro.build/en/guides/images/#default-image-service for more information on how to migrate to another image service.',
+  frame: undefined,
+  type: 'AstroError'
+}
+
+Node.js v22.11.0
+ÔÇëELIFECYCLEÔÇë Command failed with exit code 1.
