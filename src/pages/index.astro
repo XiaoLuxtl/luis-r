@@ -1,17 +1,50 @@
 ---
-
+import Layout from "../layouts/Layout.astro";
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Layout title="Luis Rendón | Chatbot Developer">
+	<main class="max-w-2xl mx-auto px-6 py-20">
+		<header class="mb-12">
+			<h1 class="text-4xl font-bold tracking-tight mb-2">Luis Rendón</h1>
+			<p class="text-lg text-slate-600">
+				Creative Chatbot Developer & Infrastructure Enthusiast
+			</p>
+		</header>
+
+		<section class="space-y-8">
+			<div
+				class="p-6 bg-white rounded-xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow"
+			>
+				<h2 class="text-xl font-semibold mb-3">
+					Featured Technical Case Study
+				</h2>
+				<p class="text-slate-600 mb-4">
+					How I engineered a high-fidelity AI Agent infrastructure using n8n,
+					Docker, and Nginx.
+				</p>
+				<a
+					href="/case-study"
+					class="inline-flex items-center font-medium text-indigo-600 hover:text-indigo-500"
+				>
+					Read the full article
+					<svg
+						class="ml-1 w-4 h-4"
+						fill="none"
+						stroke="currentColor"
+						viewBox="0 0 24 24"
+						><path
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							stroke-width="2"
+							d="M9 5l7 7-7 7"></path></svg
+					>
+				</a>
+			</div>
+
+			<p class="text-sm text-slate-400">
+				Hint: You can also chat with my AI Proxy by clicking the bubble in the
+				corner.
+			</p>
+		</section>
+	</main>
+</Layout>
