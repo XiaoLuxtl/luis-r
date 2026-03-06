@@ -1,10 +1,10 @@
 ---
-title: "Technical Case Study: Engineering a High-Fidelity AI Agent Infrastructure"
+title: "Technical Case Study: Engineering a High-Fidelity chatbot AI Agent Infrastructure"
 description: "How I engineered a custom AI stack using n8n, Typebot, and Docker on a VPS."
 heroImage: "../src/assets/images/banner.jpg"
 ---
 
-# Technical Case Study: Engineering a High-Fidelity AI Agent Infrastructure
+# Technical Case Study: Engineering a High-Fidelity chatbot AI Agent Infrastructure
 **By: Luis R. | Chatbot Developer & Infrastructure Engineer**
 
 ![Chatbot Architecture Overview](../src/assets/images/chatbot-flow-chart.png)
