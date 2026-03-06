@@ -1,0 +1,49 @@
+<!DOCTYPE html><html lang="en"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width"><link rel="icon" type="image/png" href="/favicon.png"><title>Technical Case Study: Engineering a High-Fidelity chatbot AI Agent Infrastructure</title><meta name="astro-view-transitions-enabled" content="true"><meta name="astro-view-transitions-fallback" content="animate"><script type="module" src="/_astro/ClientRouter.astro_astro_type_script_index_0_lang.CBOeYAl-.js"></script><link rel="stylesheet" href="/_astro/case-study.DwrWhSg1.css"><script type="module" src="/_astro/page.D6sK1WDe.js"></script></head> <body class="bg-slate-50 text-slate-900 font-sans antialiased">  <main class="max-w-4xl mx-auto px-6 py-20"> <article class="space-y-12"> <!-- Header / Hero Section --> <header class="text-center space-y-4 max-w-3xl mx-auto"> <h1 class="text-4xl md:text-5xl font-bold tracking-tight text-primary leading-tight"> Technical Case Study: Engineering a High-Fidelity chatbot AI Agent Infrastructure </h1> <p class="text-xl text-slate-600"> How I engineered a custom AI stack using n8n, Typebot, and Docker on a VPS. </p> </header> <div class="rounded-2xl overflow-hidden shadow-2xl border border-slate-200 aspect-video"> <img src="/_astro/banner.CLbysFAq_Z2lgVLR.webp" alt="Technical Case Study: Engineering a High-Fidelity chatbot AI Agent Infrastructure" loading="lazy" decoding="async" fetchpriority="auto" width="1376" height="768" class="w-full h-full object-cover"> </div> <!-- Content --> <div class="prose prose-slate prose-lg max-w-none
+                  prose-headings:text-primary prose-headings:font-bold
+                  prose-a:text-secondary prose-a:no-underline hover:prose-a:underline
+                  prose-img:rounded-xl prose-img:shadow-lg prose-img:border prose-img:border-slate-200"> <h1 id="technical-case-study-engineering-a-high-fidelity-chatbot-ai-agent-infrastructure">Technical Case Study: Engineering a High-Fidelity chatbot AI Agent Infrastructure</h1>
+<p><strong>By: Luis R. | Chatbot Developer &#x26; Infrastructure Engineer</strong></p>
+<p><img alt="Chatbot Architecture Overview" loading="lazy" decoding="async" fetchpriority="auto" width="990" height="1874" src="/_astro/chatbot-flow-chart.1eja8whr_1MeHgg.webp" ></p>
+<p>This project demonstrates my ability to bridge the gap between creative conversational design and robust backend engineering. By self-hosting a professional-grade AI ecosystem, I have mastered the complexities of <strong>Low-Code orchestration</strong>, <strong>Linux environments</strong>, and <strong>API architecture</strong> required for modern Chatbot Developer roles.</p>
+<h3 id="the-challenge-beyond-out-of-the-box">The Challenge: Beyond “Out of the Box”</h3>
+<p>While many entry-level developers rely on managed, restricted platforms, I chose to engineer a custom stack using <strong>n8n</strong> and <strong>Typebot</strong> on <strong>Oracle Cloud (VPS)</strong>. This approach ensures full data sovereignty and vertical scalability, though it introduces significant infrastructure hurdles that require an “Ultra Instinct” troubleshooting mindset.</p>
+<h3 id="phase-1-overcoming-installation-constraints">Phase 1: Overcoming Installation Constraints</h3>
+<p><strong>The Problem:</strong> Standard installations of orchestration tools often encounter routing conflicts when placed in specific directory structures. Initial attempts led to permission errors and service instability.</p>
+<p><strong>The Solution:</strong> I pivoted to a <strong>subdomain-first architecture</strong>. By isolating the logic on a dedicated subdomain, I eliminated directory-level conflicts and established a clean, containerized environment for Docker services.</p>
+<p><strong>The Insight:</strong> Chatbot development scalability starts with clean infrastructure separation.</p>
+<h3 id="phase-2-solving-the-invisible-header-mystery-nginx--proxies">Phase 2: Solving the “Invisible” Header Mystery (Nginx &#x26; Proxies)</h3>
+<p><strong>The Problem:</strong> A critical failure occurred when connecting the frontend to the backend logic. Despite having SSL active via Cloudflare and CyberPanel, security headers were being stripped. The “Origin” mismatch prevented Webhooks from firing, resulting in a disconnected experience.</p>
+<p><strong>The Action:</strong> I implemented <strong>Nginx as a Reverse Proxy/Intermediary</strong>. I manually configured the Nginx environment to explicitly pass vital headers (X-Forwarded-For, X-Real-IP) and managed the handshake between external web traffic and the internal Docker network.</p>
+<p><strong>The Result:</strong> A rock-solid communication bridge that maintains session integrity and secures the data layer.</p>
+<p><img alt="n8n Logic Flow" loading="lazy" decoding="async" fetchpriority="auto" width="859" height="509" src="/_astro/n8n-flow.BhL_DT8z_Z2v07aj.webp" ></p>
+<h3 id="phase-3-the-curl-revelation-data-mapping--debugging">Phase 3: The “CURL” Revelation (Data Mapping &#x26; Debugging)</h3>
+<p><strong>The Problem:</strong> The bot was successfully connected, but response bubbles appeared empty. Logs showed a “200 OK” status, yet no data rendered on the UI.</p>
+<p><strong>The Action:</strong> I used <strong>CURL</strong> via the terminal to intercept and analyze the raw JSON payload.</p>
+<p><strong>The Discovery:</strong> The logic looked for a top-level property, but the actual response was nested within a specific object path (<em>data.output</em>).</p>
+<p><strong>The Fix:</strong> A surgical adjustment to the Property Path resolved the issue instantly.</p>
+<p><strong>The Lesson:</strong> Debugging with low-level tools like CURL is the most efficient way to ensure data integrity in complex API integrations.</p>
+<h3 id="value-proposition-for-chatbot-teams">Value Proposition for Chatbot Teams</h3>
+<p>Through this project, I have proven I possess the technical autonomy and analytical depth necessary for a Chatbot Developer:</p>
+<ul>
+<li>
+<p><strong>Infrastructure Mastery:</strong> Experience with Docker, VPS management, and Nginx proxies.</p>
+</li>
+<li>
+<p><strong>Analytical Abstraction:</strong> Ability to map complex data flows between disparate platforms.</p>
+</li>
+<li>
+<p><strong>Problem-Solving Mindset:</strong> A proactive approach to researching and solving technical “roadblocks.”</p>
+</li>
+<li>
+<p><strong>Precision:</strong> An obsession with technical accuracy, from SSL configurations to JSON nesting.</p>
+</li>
+</ul>
+<p>I am prepared to apply this technical rigor to build efficient, scalable, and human-centric conversational solutions.</p> </div> <!-- Footer CTA --> <footer class="pt-16 border-t border-slate-200"> <div class="bg-slate-900 text-white p-8 rounded-2xl flex flex-col md:flex-row items-center justify-between gap-6"> <div class="space-y-2 text-center md:text-left"> <h3 class="text-2xl font-semibold">
+Ready to scale your conversational experiences?
+</h3> <p class="text-slate-400">
+Let's discuss how my tech stack can drive with the role's success.
+</p> </div> <div class="flex flex-col sm:flex-row gap-4"> <a href="mailto:dcarlos.mx@gmail.com" class="bg-secondary text-white px-8 py-3 rounded-full font-medium hover:bg-primary transition-all shadow-lg hover:shadow-primary/20 text-center">
+Send Message
+</a> <a href="/" class="bg-white/10 text-white border border-white/20 px-8 py-3 rounded-full font-medium hover:bg-white/20 transition-all text-center">
+Back to Home
+</a> </div> </div> </footer> </article> </main>  </body></html>

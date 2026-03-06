@@ -1,0 +1,31 @@
+<!DOCTYPE html><html lang="en"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width"><link rel="icon" type="image/png" href="/favicon.png"><title>Luis Rendón | Chatbot Developer</title><meta name="astro-view-transitions-enabled" content="true"><meta name="astro-view-transitions-fallback" content="animate"><script type="module" src="/_astro/ClientRouter.astro_astro_type_script_index_0_lang.CBOeYAl-.js"></script><link rel="stylesheet" href="/_astro/case-study.DwrWhSg1.css"><script type="module" src="/_astro/page.D6sK1WDe.js"></script></head> <body class="bg-slate-50 text-slate-900 font-sans antialiased">  <main class="max-w-2xl mx-auto px-6 py-20"> <header class="mb-12"> <h1 class="text-4xl font-bold tracking-tight mb-2">Luis Rendón</h1> <p class="text-lg text-slate-600">
+Creative Chatbot Developer & Infrastructure Engineer
+</p> </header> <section class="space-y-16"> <!-- Typebot Integration Section --> <div class="space-y-6"> <div class="flex items-center gap-3"> <div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center"> <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path></svg> </div> <h2 class="text-2xl font-bold text-primary">
+Test my chatbot AI Agent
+</h2> </div> <div class="w-full bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden" style="min-height: 600px; height: 80vh;"> <typebot-standard style="width: 100%; height: 100%;"></typebot-standard> </div> <p class="text-center text-sm text-slate-400">
+Have technical questions? Ask my bot programmed with n8n.
+</p> </div> <!-- Hero Card / Featured Case Study --> <div class="group p-8 bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-xl transition-all duration-300 relative overflow-hidden"> <div class="absolute top-0 right-0 w-32 h-32 bg-secondary/5 -mr-16 -mt-16 rounded-full group-hover:bg-secondary/10 transition-colors"></div> <div class="relative z-10"> <span class="inline-block px-3 py-1 bg-secondary/10 text-secondary text-xs font-bold rounded-full mb-4 uppercase tracking-wider">
+Featured Case Study
+</span> <h2 class="text-2xl font-bold text-primary mb-4 group-hover:text-secondary transition-colors">
+Chatbot AI Agent Engineering
+</h2> <p class="text-slate-600 mb-6 leading-relaxed max-w-lg text-lg">
+Discover how I built a high-fidelity proprietary infrastructure
+						using n8n, Docker, and Nginx for scalable solutions.
+</p> <a href="/case-study" class="inline-flex items-center font-semibold text-secondary hover:text-primary transition-colors gap-2">
+Read the full story
+<svg class="w-5 h-5 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7-7 7M3 12h18"></path></svg> </a> </div> </div> </section> </main> <script type="module">
+		import Typebot from "https://cdn.jsdelivr.net/npm/@typebot.io/js@0.3/dist/web.js";
+
+		function initBot() {
+			if (!document.querySelector("typebot-standard")) return;
+			Typebot.initStandard({
+				typebot: "bot-luis-r-cwabbl9",
+			});
+		}
+
+		// Primera carga normal
+		initBot();
+
+		// Cada vez que Astro navega de vuelta a esta página
+		document.addEventListener("astro:page-load", initBot);
+	</script>  </body></html>
