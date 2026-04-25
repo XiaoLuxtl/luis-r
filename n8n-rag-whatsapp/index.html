@@ -1,0 +1,144 @@
+<!DOCTYPE html><html lang="en"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width"><link rel="icon" type="image/png" href="./favicon.png"><title>Production-Grade Multi-Tenant RAG WhatsApp Bot on Oracle Free Tier</title><meta name="astro-view-transitions-enabled" content="true"><meta name="astro-view-transitions-fallback" content="animate"><script type="module" src="/luis-r/assets/ClientRouter.astro_astro_type_script_index_0_lang.CBOeYAl-.js"></script><link rel="stylesheet" href="/luis-r/assets/case-study.EUs2gaht.css"><script type="module" src="/luis-r/assets/page.D6sK1WDe.js"></script></head> <body class="bg-slate-50 text-slate-900 font-sans antialiased">  <main class="max-w-4xl mx-auto px-6 py-20"> <article class="space-y-12"> <!-- Header / Hero Section --> <header class="text-center space-y-4 max-w-3xl mx-auto"> <h1 class="text-4xl md:text-5xl font-bold tracking-tight text-primary leading-tight"> Production-Grade Multi-Tenant RAG WhatsApp Bot on Oracle Free Tier </h1> <p class="text-xl text-slate-600"> Engineer a fully self-hosted, multi-tenant AI assistant for WhatsApp with isolated data and semantic search. </p> </header> <div class="rounded-2xl overflow-hidden shadow-2xl border border-slate-200 aspect-video"> <img src="/luis-r/assets/whatsapp-rag-banner.C8N84lbO_Uw4av.webp" alt="Production-Grade Multi-Tenant RAG WhatsApp Bot on Oracle Free Tier" loading="lazy" decoding="async" fetchpriority="auto" width="1024" height="1024" class="w-full h-full object-cover"> </div> <!-- Content --> <div class="prose prose-slate prose-lg max-w-none
+                  prose-headings:text-primary prose-headings:font-bold
+                  prose-a:text-secondary prose-a:no-underline hover:prose-a:underline
+                  prose-img:rounded-xl prose-img:shadow-lg prose-img:border prose-img:border-slate-200"> <h1 id="building-a-production-grade-multi-tenant-rag-whatsapp-bot-on-oracle-free-tier">Building a Production-Grade Multi-Tenant RAG WhatsApp Bot on Oracle Free Tier</h1>
+<h2 id="the-challenge-zero-budget-enterprise-grade-architecture">The Challenge: Zero Budget, Enterprise-Grade Architecture</h2>
+<p>Most chatbot tutorials show you how to connect two SaaS platforms and call it a day. This project was different — the goal was to engineer a fully self-hosted, multi-tenant AI assistant for WhatsApp that could serve 100+ clients with isolated data, semantic search, and intelligent guardrails, running entirely on Oracle Cloud’s free ARM64 instance.</p>
+<p>The constraints were real: 50GB shared disk, no managed databases, no paid proxies, and a LiteSpeed web server that had opinions of its own.</p>
+<hr>
+<h2 id="phase-1-taming-litespeed--the-websocket-compression-problem">Phase 1: Taming LiteSpeed — The WebSocket Compression Problem</h2>
+<p><strong>The Problem:</strong> After deploying n8n behind LiteSpeed via CyberPanel, the editor loaded fine — but executing any workflow caused an immediate crash. The logs revealed: <code>Invalid WebSocket frame: RSV1 must be clear</code>. LiteSpeed was silently injecting <code>permessage-deflate</code> compression into WebSocket frames, corrupting them before they reached n8n.</p>
+<p><strong>The Solution:</strong> Disabling gzip at the VHost level (<code>enableGzip 0</code>, <code>enableBr 0</code>) wasn’t enough — LiteSpeed was negotiating compression at the WebSocket handshake layer independently. The fix required switching n8n’s push backend from WebSocket to SSE (<code>N8N_PUSH_BACKEND=sse</code>) and introducing an nginx sidecar container that forced the correct headers before traffic reached n8n.</p>
+<p><strong>The Insight:</strong> Reverse proxies don’t just route traffic — they actively transform it. When a proxy sits between a WebSocket server and a client, every header, every extension negotiation, every frame bit becomes a potential point of failure.</p>
+<hr>
+<h2 id="phase-2-the-origin-header-mystery">Phase 2: The Origin Header Mystery</h2>
+<p><strong>The Problem:</strong> After switching to SSE, a new error appeared: <code>Origin header does NOT match the expected origin. Expected: "undefined"</code>. n8n’s security layer was rejecting all push connections because it couldn’t determine its own origin — rendering the editor unusable for workflow execution.</p>
+<p><strong>The Deep Dive:</strong> Using <code>tcpdump</code> on the loopback interface confirmed the <code>Origin</code> header was arriving correctly at port 5678. The real issue was a nested directory problem: <code>N8N_USER_FOLDER</code> and <code>HOME</code> environment variables were compounding, creating a <code>~/.n8n/.n8n/config</code> path that n8n never read. The <code>editorBaseUrl</code> was never loaded, so n8n’s expected origin was literally <code>undefined</code>.</p>
+<p><strong>The Solution:</strong> Remapping the Docker volume directly to <code>/home/node/.n8n</code> — n8n’s canonical default path — and removing the conflicting <code>HOME</code> variable. The nginx sidecar injected <code>Origin: https://n8n.domain.com</code> as a static header, bypassing the proxy stripping entirely.</p>
+<p><strong>The Insight:</strong> Container path nesting is a silent killer. When <code>HOME</code> and a custom folder variable both resolve to the same base, you get infinite directory recursion that no error message will explain clearly.</p>
+<hr>
+<h2 id="phase-3-python-in-a-distroless-container">Phase 3: Python in a Distroless Container</h2>
+<p><strong>The Problem:</strong> n8n’s latest image is distroless — no shell, no package manager, no Python. Enabling the Python task runner returned: <code>Virtual environment is missing from this system</code>. Standard approaches (copying Alpine binaries, using glibc builds) failed due to library incompatibilities on ARM64.</p>
+<p><strong>The Deep Dive:</strong> By reading n8n’s compiled source (<code>task-runner-process-py.js</code>), the exact expected venv path was located: <code>/usr/local/lib/node_modules/@n8n/task-runner-python/.venv/bin/python</code>. The <code>src/</code> directory containing the runner’s Python code wasn’t in the distroless image at all — it had to be cloned from the n8n GitHub repository at the matching version tag.</p>
+<p><strong>The Solution:</strong> A three-stage Dockerfile — Alpine Python builder for the venv, Node.js for cloning the runner source, and the n8n distroless base as the final stage. Libraries like <code>libpython3.12.so</code> and <code>libffi.so.8</code> were copied individually with proper symlinks.</p>
+<p><strong>The Insight:</strong> Distroless images are secure by design — but that security means you must understand exactly what your dependencies need at the binary level, not just the package level.</p>
+<hr>
+<h2 id="phase-4-building-the-rag-pipeline">Phase 4: Building the RAG Pipeline</h2>
+<p><strong>The Architecture:</strong></p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>PDF/CSV Upload → Python Extraction → Word-aware Chunking → </span></span>
+<span class="line"><span>OpenAI Embeddings (batch) → Upstash Vector → PostgreSQL Control Table</span></span></code></pre>
+<p><strong>Key Engineering Decisions:</strong></p>
+<p><strong>File extraction without base64:</strong> n8n stores uploaded files as <code>filesystem-v2</code> references, not in-memory base64. The Python node reads directly from <code>/home/node/.n8n/binaryData/</code> using the UUID from the file reference — bypassing the broken base64 pipeline entirely.</p>
+<p><strong>Word-aware chunking:</strong> Character-based chunking with overlap produced fragments like <code>"ico."</code> — the tail end of a word split across boundaries. Switching to word-boundary chunking with a minimum chunk size filter (50 chars) eliminated orphaned fragments entirely.</p>
+<p><strong>SHA-256 deduplication:</strong> Each uploaded file is hashed before processing. A PostgreSQL control table (<code>rag_files</code>) stores the hash per <code>instance_id + filename</code>. On re-upload, if the hash matches, the entire embedding pipeline is skipped — zero wasted API calls.</p>
+<p><strong>Batch upsert to Upstash:</strong> 1536-dimension vectors at 20 vectors per request exceeded Upstash’s payload limit. The JavaScript node batches into groups of 5, sending the array as raw JSON body — <code>Using Fields Below</code> mode wraps the payload in an extra object that Upstash rejects.</p>
+<p><strong>The Insight:</strong> Vector databases have strict payload size limits that aren’t always documented clearly. Always calculate your payload size (<code>dimensions × 4 bytes × batch_size</code>) before assuming a batch size is safe.</p>
+<hr>
+<h2 id="phase-5-multi-tenant-query-pipeline">Phase 5: Multi-Tenant Query Pipeline</h2>
+<p><strong>The Architecture:</strong></p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>WhatsApp Message → Embed Query → Upstash Semantic Search (filter: instance_id) → </span></span>
+<span class="line"><span>Context Injection → AI Agent → Response</span></span></code></pre>
+<p>Each client’s vectors are tagged with <code>instance_id</code> in metadata. Upstash’s SQL-like filter syntax (<code>"filter": "instance_id = 'PixelPages_Prueba'"</code>) ensures complete data isolation at query time — one index, 100 clients, zero cross-contamination.</p>
+<p>The system prompt template in Airtable uses <code>{{ $json.variable }}</code> placeholders that a JavaScript node resolves before passing to the AI Agent — making the entire agent persona, RAG context, and business rules configurable per client without touching the workflow.</p>
+<hr>
+<h2 id="phase-6-whatsapp-media-decryption">Phase 6: WhatsApp Media Decryption</h2>
+<p><strong>The Problem:</strong> WhatsApp encrypts all media with AES-256. The <code>media_key</code> URL returned by Evolution API is an <code>.enc</code> file — unreadable without decryption. The Analyze Image node in n8n couldn’t process base64 data URLs, and the OpenAI node’s URL mode doesn’t support data URLs either.</p>
+<p><strong>The Solution:</strong> Evolution API’s <code>/chat/getBase64FromMediaMessage</code> endpoint handles decryption server-side, returning clean base64. A JavaScript node constructs the data URL (<code>data:${mimetype};base64,${clean_base64}</code>) and passes it directly to a raw OpenAI HTTP Request node — bypassing n8n’s native node limitations entirely.</p>
+<p><strong>For audio:</strong> The base64 OGG is converted to a binary attachment in-memory within the n8n execution context, consumed by Whisper, and the transcription flows into the same RAG pipeline as text messages.</p>
+<hr>
+<h2 id="phase-7-intelligent-guardrails">Phase 7: Intelligent Guardrails</h2>
+<p>Four validation layers execute before any AI processing:</p>
+<ol>
+<li>
+<p><strong>Timestamp Guard:</strong> Messages older than 4 hours are silently dropped — prevents Evolution API retry storms from flooding the pipeline when n8n restarts.</p>
+</li>
+<li>
+<p><strong>Pause Guard:</strong> A PostgreSQL table (<code>bot_pauses</code>) tracks per-conversation pause states. Users send <code>/pause 24</code> (embedded anywhere in a message) to silence the bot for N hours on their specific <code>remote_jid</code>. The command is detected via regex, stripped from the message, and the conversation continues transparently.</p>
+</li>
+<li>
+<p><strong>Exclusion Guard:</strong> Airtable stores excluded phone numbers per instance. A <code>FIND()</code> filter performs a contains-match on the last 10 digits of the <code>remote_jid</code> — making it country-code agnostic without hardcoding any country prefixes.</p>
+</li>
+<li>
+<p><strong>Relevance Guard:</strong> A <code>gpt-4o-mini</code> call (~$0.000007 per message) classifies whether the incoming message is relevant to the business context before triggering the full RAG pipeline. Irrelevant messages receive a polite deflection. Cost at 10,000 messages/month: ~$0.07.</p>
+</li>
+</ol>
+<hr>
+<h2 id="the-stack">The Stack</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Layer</th><th>Technology</th><th>Cost</th></tr></thead><tbody><tr><td>VPS</td><td>Oracle Cloud ARM64 (4 vCPU, 24GB RAM)</td><td>$0</td></tr><tr><td>Orchestration</td><td>n8n (self-hosted Docker)</td><td>$0</td></tr><tr><td>Web Server</td><td>LiteSpeed via CyberPanel</td><td>$0</td></tr><tr><td>Reverse Proxy</td><td>nginx sidecar</td><td>$0</td></tr><tr><td>Vector DB</td><td>Upstash Vector</td><td>$0</td></tr><tr><td>Logs DB</td><td>Turso (per-tenant SQLite)</td><td>$4.99/mo</td></tr><tr><td>Config Store</td><td>Airtable</td><td>$0</td></tr><tr><td>Control DB</td><td>PostgreSQL (self-hosted)</td><td>$0</td></tr><tr><td>AI</td><td>OpenAI GPT-4o + Whisper + Embeddings</td><td>Usage</td></tr><tr><td>WhatsApp</td><td>Evolution API (self-hosted)</td><td>$0</td></tr></tbody></table>
+<p><strong>Total fixed infrastructure cost: ~$5/month for 100 clients.</strong></p>
+<hr>
+<h2 id="key-takeaways">Key Takeaways</h2>
+<ul>
+<li>Self-hosting is not cheaper than managed services in time — but it builds understanding that managed services actively hide from you.</li>
+<li>Reading compiled JavaScript source code to find undocumented internal paths is a legitimate debugging strategy.</li>
+<li>Every proxy layer is a transformation layer. Treat it that way.</li>
+<li>The difference between a demo and a production system is the guardrails, not the AI model.</li>
+</ul> </div> <!-- Footer CTA --> <footer class="pt-16 border-t border-slate-200"> <div class="bg-slate-900 text-white p-8 rounded-2xl flex flex-col md:flex-row items-center justify-between gap-6"> <div class="space-y-2 text-center md:text-left"> <h3 class="text-2xl font-semibold">
+Ready to scale your conversational experiences?
+</h3> <p class="text-slate-400">
+Let's discuss how my tech stack can drive with the role's success.
+</p> </div> <div class="flex flex-col sm:flex-row gap-4"> <a href="mailto:dcarlos.mx@gmail.com" class="bg-secondary text-white px-8 py-3 rounded-full font-medium hover:bg-primary transition-all shadow-lg hover:shadow-primary/20 text-center">
+Send Message
+</a> <a href="../" class="bg-white/10 text-white border border-white/20 px-8 py-3 rounded-full font-medium hover:bg-white/20 transition-all text-center">
+Back to Home
+</a> </div> </div> </footer> </article> </main>  </body></html>
