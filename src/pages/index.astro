@@ -1,5 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import ContactSection from "../components/ContactSection.astro";
 ---
 
 <Layout title="Luis Rendón | Chatbot Developer">
@@ -49,7 +50,7 @@ import Layout from "../layouts/Layout.astro";
         </p>
       </div>
 
-      <!-- Hero Card / Featured Case Study -->
+      <!-- Hero Card / Featured Case Study 1 -->
       <div
         class="group p-8 bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-xl transition-all duration-300 relative overflow-hidden"
       >
@@ -76,7 +77,54 @@ import Layout from "../layouts/Layout.astro";
           </p>
 
           <a
-            href="./case-study"
+            href="./case-study/"
+            class="inline-flex items-center font-semibold text-secondary hover:text-primary transition-colors gap-2"
+          >
+            Read the full story
+
+            <svg
+              class="w-5 h-5 transform group-hover:translate-x-1 transition-transform"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              ><path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M14 5l7 7-7 7M3 12h18"></path></svg
+            >
+          </a>
+        </div>
+      </div>
+
+      <!-- Hero Card / Case Study 2 -->
+      <div
+        class="group p-8 bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-xl transition-all duration-300 relative overflow-hidden"
+      >
+        <div
+          class="absolute top-0 right-0 w-32 h-32 bg-secondary/5 -mr-16 -mt-16 rounded-full group-hover:bg-secondary/10 transition-colors"
+        >
+        </div>
+
+        <div class="relative z-10">
+          <span
+            class="inline-block px-3 py-1 bg-secondary/10 text-secondary text-xs font-bold rounded-full mb-4 uppercase tracking-wider"
+          >
+            Latest Project
+          </span>
+
+          <h2
+            class="text-2xl font-bold text-primary mb-4 group-hover:text-secondary transition-colors"
+          >
+            Multi-Tenant RAG WhatsApp Bot
+          </h2>
+          <p class="text-slate-600 mb-6 leading-relaxed max-w-lg text-lg">
+            Engineering a fully self-hosted, scalable AI assistant with isolated
+            data and semantic search on Oracle Cloud.
+          </p>
+
+          <a
+            href="./n8n-rag-whatsapp/"
             class="inline-flex items-center font-semibold text-secondary hover:text-primary transition-colors gap-2"
           >
             Read the full story
@@ -96,6 +144,8 @@ import Layout from "../layouts/Layout.astro";
         </div>
       </div>
     </section>
+
+    <ContactSection />
   </main>
 
   <script type="module">

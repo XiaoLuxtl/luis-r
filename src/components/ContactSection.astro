@@ -1,0 +1,105 @@
+---
+import contact from "../content/contact.json";
+const hasDirect = Boolean(contact.email || contact.linkedin);
+---
+
+<section
+  class="mt-16 p-8 bg-white rounded-2xl border border-slate-200 shadow-sm"
+>
+  <div class="max-w-4xl mx-auto">
+    {
+      hasDirect ? (
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+          <div class="space-y-4">
+            <h2 class="text-3xl font-bold">{contact.title}</h2>
+            <p class="text-slate-600">{contact.description}</p>
+
+            <div class="flex gap-3 mt-4">
+              {contact.email ? (
+                <a
+                  href={`mailto:${contact.email}`}
+                  class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-slate-200 hover:shadow-md transition"
+                >
+                  <svg
+                    class="w-5 h-5 text-slate-700"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M16 12H8m8 0l-4-4m4 4l-4 4M3 8v8a2 2 0 002 2h14a2 2 0 002-2V8"
+                    />
+                  </svg>
+                  <span class="font-medium">Email</span>
+                </a>
+              ) : null}
+
+              {contact.linkedin ? (
+                <a
+                  href={contact.linkedin}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-secondary text-white hover:opacity-95 transition"
+                >
+                  <svg
+                    class="w-5 h-5"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    aria-hidden="true"
+                  >
+                    <path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.11 1 2.5 1 4.98 2.12 4.98 3.5zM0 8h5v16H0V8zm7.5 0H12v2.2h.1c.6-1.1 2.1-2.2 4.3-2.2 4.6 0 5.4 3 5.4 6.9V24h-5v-7.6c0-1.8 0-4.1-2.5-4.1-2.5 0-2.9 1.9-2.9 4v7.7h-5V8z" />
+                  </svg>
+                  <span class="font-medium">LinkedIn</span>
+                </a>
+              ) : null}
+            </div>
+          </div>
+
+          <div class="rounded-lg overflow-hidden">
+            {contact.image ? (
+              <img
+                src={contact.image}
+                alt="Contacto"
+                class="w-full h-64 object-cover md:h-full"
+              />
+            ) : (
+              <div class="w-full h-64 bg-slate-100 flex items-center justify-center text-slate-400">
+                Imagen placeholder
+              </div>
+            )}
+          </div>
+        </div>
+      ) : (
+        <div class="max-w-xl mx-auto">
+          <h2 class="text-3xl font-bold mb-2">{contact.title}</h2>
+          <p class="text-slate-600 mb-6">{contact.description}</p>
+          <form class="grid gap-3" action="#" method="post">
+            <input
+              name="name"
+              placeholder={contact.placeholderName}
+              class="border rounded px-3 py-2"
+            />
+            <input
+              name="email"
+              placeholder={contact.placeholderEmail}
+              class="border rounded px-3 py-2"
+            />
+            <textarea
+              name="message"
+              placeholder={contact.messagePlaceholder}
+              class="border rounded px-3 py-2 h-32"
+            />
+            <div class="flex justify-end">
+              <button class="inline-flex items-center justify-center py-2 px-4 bg-secondary text-white rounded">
+                {contact.cta}
+              </button>
+            </div>
+          </form>
+        </div>
+      )
+    }
+  </div>
+</section>
