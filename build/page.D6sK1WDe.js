@@ -1,1 +1,0 @@
-import{a as i}from"./index.srgjoacm.js";i();
