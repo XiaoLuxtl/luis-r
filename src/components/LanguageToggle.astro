@@ -1,0 +1,65 @@
+---
+---
+
+<div class="fixed top-4 right-4 z-50">
+  <div
+    id="lang-toggle"
+    class="relative flex items-center bg-slate-200 rounded-full p-0.5 cursor-pointer select-none w-[72px] h-8"
+  >
+    <div
+      id="lang-slider"
+      class="absolute top-0.5 left-0.5 w-[34px] h-7 bg-primary rounded-full transition-transform duration-200 ease-in-out"
+    ></div>
+    <span
+      id="lang-en"
+      class="relative z-10 flex-1 text-center text-xs font-bold text-white"
+    >EN</span>
+    <span
+      id="lang-es"
+      class="relative z-10 flex-1 text-center text-xs font-bold text-slate-400"
+    >ES</span>
+  </div>
+</div>
+
+<script>
+  function initLangToggle() {
+    const toggle = document.getElementById("lang-toggle");
+    const slider = document.getElementById("lang-slider");
+    const enLabel = document.getElementById("lang-en");
+    const esLabel = document.getElementById("lang-es");
+    if (!toggle || !slider || !enLabel || !esLabel) return;
+
+    let lang = localStorage.getItem("lang") || "en";
+    applyLang(lang);
+
+    toggle.addEventListener("click", () => {
+      lang = lang === "en" ? "es" : "en";
+      localStorage.setItem("lang", lang);
+      applyLang(lang);
+    });
+
+    function applyLang(l: string) {
+      if (l === "en") {
+        slider.style.transform = "translateX(0)";
+        enLabel!.className = "relative z-10 flex-1 text-center text-xs font-bold text-white";
+        esLabel!.className = "relative z-10 flex-1 text-center text-xs font-bold text-slate-400";
+      } else {
+        slider.style.transform = "translateX(34px)";
+        enLabel!.className = "relative z-10 flex-1 text-center text-xs font-bold text-slate-400";
+        esLabel!.className = "relative z-10 flex-1 text-center text-xs font-bold text-white";
+      }
+
+      document.querySelectorAll("[data-lang]").forEach((el) => {
+        const htmlEl = el as HTMLElement;
+        if (htmlEl.dataset.lang === l) {
+          htmlEl.classList.remove("hidden");
+        } else {
+          htmlEl.classList.add("hidden");
+        }
+      });
+    }
+  }
+
+  initLangToggle();
+  document.addEventListener("astro:page-load", initLangToggle);
+</script>

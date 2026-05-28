@@ -1,14 +1,17 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import ContactSection from "../components/ContactSection.astro";
+import LanguageToggle from "../components/LanguageToggle.astro";
 ---
 
-<Layout title="Luis Rendón | Chatbot Developer">
+<Layout title="Luis Rendón | AI Automation Engineer">
+  <LanguageToggle />
+
   <main class="max-w-2xl mx-auto px-6 py-20">
     <header class="mb-12">
       <h1 class="text-4xl font-bold tracking-tight mb-2">Luis Rendón</h1>
       <p class="text-lg text-slate-600">
-        Creative Chatbot Developer & Infrastructure Engineer
+        AI Automation Engineer | n8n Creator
       </p>
     </header>
 
@@ -33,7 +36,8 @@ import ContactSection from "../components/ContactSection.astro";
             >
           </div>
           <h2 class="text-2xl font-bold text-primary">
-            Test my chatbot AI Agent
+            <span data-lang="en">Test my chatbot AI Agent</span>
+            <span data-lang="es" class="hidden">Prueba mi agente AI</span>
           </h2>
         </div>
 
@@ -46,101 +50,150 @@ import ContactSection from "../components/ContactSection.astro";
         </div>
 
         <p class="text-center text-sm text-slate-400">
-          Have technical questions? Ask my bot programmed with n8n.
+          <span data-lang="en">Have technical questions? Ask my bot programmed with n8n.</span>
+          <span data-lang="es" class="hidden">¿Preguntas técnicas? Pregúntale a mi bot programado con n8n.</span>
         </p>
       </div>
 
-      <!-- Hero Card / Featured Case Study 1 -->
-      <div
-        class="group p-8 bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-xl transition-all duration-300 relative overflow-hidden"
-      >
-        <div
-          class="absolute top-0 right-0 w-32 h-32 bg-secondary/5 -mr-16 -mt-16 rounded-full group-hover:bg-secondary/10 transition-colors"
-        >
-        </div>
-
-        <div class="relative z-10">
-          <span
-            class="inline-block px-3 py-1 bg-secondary/10 text-secondary text-xs font-bold rounded-full mb-4 uppercase tracking-wider"
-          >
-            Featured Case Study
+      <!-- About Me -->
+      <div class="space-y-4">
+        <h2 class="text-2xl font-bold text-primary">
+          <span data-lang="en">About</span>
+          <span data-lang="es" class="hidden">Sobre mí</span>
+        </h2>
+        <p class="text-slate-600 leading-relaxed">
+          <span data-lang="en">
+            I build production AI agents and automation pipelines with n8n, RAG, and LLMs.
+            Self-hosted infrastructure on Oracle Cloud (Docker, ARM64). I also run
+            <a href="https://pixelpages.com.mx/" target="_blank" rel="noopener noreferrer" class="text-secondary font-medium hover:underline">PixelPages</a>,
+            an AI-powered photo restoration business with real paying clients.
           </span>
+          <span data-lang="es" class="hidden">
+            Construyo agentes AI en producción y pipelines de automatización con n8n, RAG y LLMs.
+            Infraestructura self-hosted en Oracle Cloud (Docker, ARM64). También opero
+            <a href="https://pixelpages.com.mx/" target="_blank" rel="noopener noreferrer" class="text-secondary font-medium hover:underline">PixelPages</a>,
+            un negocio de restauración fotográfica con IA y clientes reales.
+          </span>
+        </p>
+      </div>
 
-          <h2
-            class="text-2xl font-bold text-primary mb-4 group-hover:text-secondary transition-colors"
+      <!-- Projects -->
+      <div class="space-y-10">
+        <h2 class="text-2xl font-bold text-primary">
+          <span data-lang="en">Projects</span>
+          <span data-lang="es" class="hidden">Proyectos</span>
+        </h2>
+
+        <!-- n8n Automation -->
+        <div class="space-y-4">
+          <h3 class="text-lg font-semibold text-slate-800 border-b border-slate-200 pb-2">
+            <span data-lang="en">n8n Automation</span>
+            <span data-lang="es" class="hidden">Automatización n8n</span>
+          </h3>
+
+          <a
+            href="https://n8n.io/creators/xiaolux/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="group block p-5 bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-lg transition-shadow"
           >
-            Chatbot AI Agent Engineering
-          </h2>
-          <p class="text-slate-600 mb-6 leading-relaxed max-w-lg text-lg">
-            Discover how I built a high-fidelity proprietary infrastructure
-            using n8n, Docker, and Nginx for scalable solutions.
-          </p>
+            <h4 class="font-bold text-primary group-hover:text-secondary transition-colors">n8n Creator Profile</h4>
+            <p class="text-sm text-slate-600 mt-1">
+              <span data-lang="en">Published production templates: WhatsApp voice transcription, intent classification with GPT-4o-mini.</span>
+              <span data-lang="es" class="hidden">Templates en producción: transcripción de voz WhatsApp, clasificación de intención con GPT-4o-mini.</span>
+            </p>
+          </a>
 
           <a
             href="./case-study/"
-            class="inline-flex items-center font-semibold text-secondary hover:text-primary transition-colors gap-2"
+            class="group block p-5 bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-lg transition-shadow"
           >
-            Read the full story
+            <h4 class="font-bold text-primary group-hover:text-secondary transition-colors">
+              <span data-lang="en">Chatbot AI Agent Infrastructure</span>
+              <span data-lang="es" class="hidden">Infraestructura de Agente AI Chatbot</span>
+            </h4>
+            <p class="text-sm text-slate-600 mt-1">
+              <span data-lang="en">Custom stack: n8n + Typebot + Docker + Nginx on Oracle Cloud VPS.</span>
+              <span data-lang="es" class="hidden">Stack personalizado: n8n + Typebot + Docker + Nginx en VPS Oracle Cloud.</span>
+            </p>
+          </a>
 
-            <svg
-              class="w-5 h-5 transform group-hover:translate-x-1 transition-transform"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              ><path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M14 5l7 7-7 7M3 12h18"></path></svg
-            >
+          <a
+            href="./n8n-rag-whatsapp/"
+            class="group block p-5 bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-lg transition-shadow"
+          >
+            <h4 class="font-bold text-primary group-hover:text-secondary transition-colors">
+              <span data-lang="en">Multi-Tenant RAG WhatsApp Bot</span>
+              <span data-lang="es" class="hidden">Bot RAG WhatsApp Multi-Tenant</span>
+            </h4>
+            <p class="text-sm text-slate-600 mt-1">
+              <span data-lang="en">Self-hosted AI assistant. Semantic search, isolated data per client. $5/mo for 100 clients.</span>
+              <span data-lang="es" class="hidden">Asistente AI self-hosted. Búsqueda semántica, datos aislados por cliente. $5/mes para 100 clientes.</span>
+            </p>
+          </a>
+        </div>
+
+        <!-- AI Business -->
+        <div class="space-y-4">
+          <h3 class="text-lg font-semibold text-slate-800 border-b border-slate-200 pb-2">
+            <span data-lang="en">AI Business</span>
+            <span data-lang="es" class="hidden">Negocio con IA</span>
+          </h3>
+
+          <a
+            href="https://pixelpages.com.mx/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="group block p-5 bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-lg transition-shadow"
+          >
+            <div class="flex items-center gap-2">
+              <h4 class="font-bold text-primary group-hover:text-secondary transition-colors">PixelPages</h4>
+              <span class="px-1.5 py-0.5 bg-green-100 text-green-700 text-xs font-medium rounded">PageSpeed 100</span>
+            </div>
+            <p class="text-sm text-slate-600 mt-1">
+              <span data-lang="en">AI photo restoration. LoRA fine-tuning, facial reconstruction, Giclee printing. Real clients, real revenue.</span>
+              <span data-lang="es" class="hidden">Restauración fotográfica con IA. Fine-tuning LoRA, reconstrucción facial, impresión Giclee. Clientes reales.</span>
+            </p>
+          </a>
+        </div>
+
+        <!-- Data Engineering -->
+        <div class="space-y-4">
+          <h3 class="text-lg font-semibold text-slate-800 border-b border-slate-200 pb-2">
+            <span data-lang="en">Data Engineering</span>
+            <span data-lang="es" class="hidden">Ingeniería de Datos</span>
+          </h3>
+
+          <a
+            href="https://xiaoluxtl.github.io/tempmap/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="group block p-5 bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-lg transition-shadow"
+          >
+            <h4 class="font-bold text-primary group-hover:text-secondary transition-colors">
+              <span data-lang="en">Real Estate Analysis Map</span>
+              <span data-lang="es" class="hidden">Mapa de Análisis Inmobiliario</span>
+            </h4>
+            <p class="text-sm text-slate-600 mt-1">
+              <span data-lang="en">Daily scraping → ETL → scoring → interactive Voronoi maps. Python, Selenium, OpenAI.</span>
+              <span data-lang="es" class="hidden">Scraping diario → ETL → scoring → mapas Voronoi interactivos. Python, Selenium, OpenAI.</span>
+            </p>
           </a>
         </div>
       </div>
 
-      <!-- Hero Card / Case Study 2 -->
-      <div
-        class="group p-8 bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-xl transition-all duration-300 relative overflow-hidden"
-      >
-        <div
-          class="absolute top-0 right-0 w-32 h-32 bg-secondary/5 -mr-16 -mt-16 rounded-full group-hover:bg-secondary/10 transition-colors"
-        >
-        </div>
-
-        <div class="relative z-10">
-          <span
-            class="inline-block px-3 py-1 bg-secondary/10 text-secondary text-xs font-bold rounded-full mb-4 uppercase tracking-wider"
-          >
-            Latest Project
-          </span>
-
-          <h2
-            class="text-2xl font-bold text-primary mb-4 group-hover:text-secondary transition-colors"
-          >
-            Multi-Tenant RAG WhatsApp Bot
-          </h2>
-          <p class="text-slate-600 mb-6 leading-relaxed max-w-lg text-lg">
-            Engineering a fully self-hosted, scalable AI assistant with isolated
-            data and semantic search on Oracle Cloud.
-          </p>
-
-          <a
-            href="./n8n-rag-whatsapp/"
-            class="inline-flex items-center font-semibold text-secondary hover:text-primary transition-colors gap-2"
-          >
-            Read the full story
-
-            <svg
-              class="w-5 h-5 transform group-hover:translate-x-1 transition-transform"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              ><path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M14 5l7 7-7 7M3 12h18"></path></svg
-            >
-          </a>
+      <!-- Skills / Tech Stack -->
+      <div class="space-y-4">
+        <h2 class="text-2xl font-bold text-primary">Stack</h2>
+        <div class="flex flex-wrap gap-2">
+          <span class="px-3 py-1 text-sm font-medium rounded-full bg-[#EA4B71]/10 text-[#EA4B71] border border-[#EA4B71]/20">n8n</span>
+          <span class="px-3 py-1 text-sm font-medium rounded-full bg-[#3776AB]/10 text-[#3776AB] border border-[#3776AB]/20">Python</span>
+          <span class="px-3 py-1 text-sm font-medium rounded-full bg-[#3178C6]/10 text-[#3178C6] border border-[#3178C6]/20">TypeScript</span>
+          <span class="px-3 py-1 text-sm font-medium rounded-full bg-[#2496ED]/10 text-[#2496ED] border border-[#2496ED]/20">Docker</span>
+          <span class="px-3 py-1 text-sm font-medium rounded-full bg-[#10A37F]/10 text-[#10A37F] border border-[#10A37F]/20">OpenAI</span>
+          <span class="px-3 py-1 text-sm font-medium rounded-full bg-[#F48120]/10 text-[#F48120] border border-[#F48120]/20">RAG</span>
+          <span class="px-3 py-1 text-sm font-medium rounded-full bg-slate-500/10 text-slate-600 border border-slate-300">Oracle Cloud</span>
+          <span class="px-3 py-1 text-sm font-medium rounded-full bg-[#BC4C00]/10 text-[#BC4C00] border border-[#BC4C00]/20">Astro</span>
         </div>
       </div>
     </section>
@@ -158,10 +211,7 @@ import ContactSection from "../components/ContactSection.astro";
       });
     }
 
-    // Primera carga normal
     initBot();
-
-    // Cada vez que Astro navega de vuelta a esta página
     document.addEventListener("astro:page-load", initBot);
   </script>
 </Layout>
